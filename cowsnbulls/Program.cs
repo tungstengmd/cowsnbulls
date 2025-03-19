@@ -26,9 +26,8 @@ while (true)
 	{
 		lower = lower + Convert.ToString(i + 1);
 		upper = upper + Convert.ToString(8 - i);
-		Console.WriteLine($"{lower} {upper}");
 	}
-	while (true)
+    while (true)
 	{
 		int cows = 0;
 		int bulls = 0;
@@ -36,7 +35,7 @@ while (true)
 		string guess = Console.ReadLine();
 		while (guess != num)
 		{
-			if (guess == "" || Convert.ToInt32(guess) > 9876 || Convert.ToInt32(guess) < 1023)
+			if (guess == "" || Convert.ToInt32(guess) < Convert.ToInt32(lower) || Convert.ToInt32(guess) > Convert.ToInt32(upper))
 			{
 				Console.WriteLine("Invalid guess!");
 				break;
