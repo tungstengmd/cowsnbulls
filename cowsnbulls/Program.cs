@@ -1,10 +1,10 @@
 ﻿using System;
 var r = new Random();
-string num = "";
-string lower = "10";
-string upper = "98";
 while (true)
 {
+	string num = "";
+	string lower = "10";
+	string upper = "98";
 	Console.Write("Enter digits: ");
 	int digits = Convert.ToInt32(Console.ReadLine());
 	if (digits < 3)
@@ -20,8 +20,9 @@ while (true)
 		{
 			number = Convert.ToChar(r.Next(49, 58));
 		}
-		num = num + Convert.ToString(number);
+		num = $"{num}{number}";
 	}
+    Console.WriteLine(num);
 	for (int i = 1; lower.Length != digits; i++)
 	{
 		lower = lower + Convert.ToString(i + 1);
