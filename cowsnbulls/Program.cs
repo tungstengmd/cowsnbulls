@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 var r = new Random();
 while (true)
 {
-    string num = "";
-    string lower = "10";
-    string upper = "98";
-    Console.Write("Enter digits: ");
+	string num = "";
+	string lower = "10";
+	string upper = "98";
+	Console.Write("Enter digits: ");
 	int digits = Convert.ToInt32(Console.ReadLine());
 	if (digits < 3)
 	{
@@ -35,7 +36,7 @@ while (true)
 		string guess = Console.ReadLine();
 		while (guess != num)
 		{
-			if (guess == "" || Convert.ToInt32(guess) < Convert.ToInt32(lower) || Convert.ToInt32(guess) > Convert.ToInt32(upper))
+			if (Regex.Matches(guess, "[1-9]").Count > 1 || guess == "" || Convert.ToInt32(guess) < Convert.ToInt32(lower) || Convert.ToInt32(guess) > Convert.ToInt32(upper) || guess.Length > digits)
 			{
 				Console.WriteLine("Invalid guess!");
 				break;
@@ -48,16 +49,16 @@ while (true)
 				int numdex = num.IndexOf(c);
 				if (index >= 0 && index == numdex)
 				{
-					cows++;
+					bulls++;
 				}
 				else if (index >= 0 && guess.Contains(c) && num.Contains(c))
 				{
-					bulls++;
+					cows++;
 				}
 			}
 			break;
 		}
-		if (guess == num || cows == digits)
+		if (guess == num || bulls == digits)
 		{
 			Console.Write($"Congrats! Attempts: {atts}\nDo you wish to play again? Press 1 if so: ");
 			var restart = Console.ReadLine();
@@ -69,7 +70,7 @@ while (true)
 			{
 				goto leave;
 			}
-        }
+		}
 		else
 		{
 			Console.WriteLine($"Cows: {cows}\nBulls: {bulls}");
