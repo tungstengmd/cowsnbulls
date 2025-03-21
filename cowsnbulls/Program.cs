@@ -65,10 +65,15 @@ while (true)
 			{
 				break;
 			}
-		}
+			else
+			{
+				goto leave;
+			}
+        }
 		else
 		{
 			Console.WriteLine($"Cows: {cows}\nBulls: {bulls}");
 		}
 	}
 }
+leave:;
