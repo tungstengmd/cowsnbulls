@@ -2,10 +2,10 @@
 var r = new Random();
 while (true)
 {
-	string num = "";
-	string lower = "10";
-	string upper = "98";
-	Console.Write("Enter digits: ");
+    string num = "";
+    string lower = "10";
+    string upper = "98";
+    Console.Write("Enter digits: ");
 	int digits = Convert.ToInt32(Console.ReadLine());
 	if (digits < 3)
 	{
@@ -20,15 +20,14 @@ while (true)
 		{
 			number = Convert.ToChar(r.Next(49, 58));
 		}
-		num = $"{num}{number}";
+		num = num + Convert.ToString(number);
 	}
-    Console.WriteLine(num);
 	for (int i = 1; lower.Length != digits; i++)
 	{
 		lower = lower + Convert.ToString(i + 1);
 		upper = upper + Convert.ToString(8 - i);
 	}
-    while (true)
+	while (true)
 	{
 		int cows = 0;
 		int bulls = 0;
@@ -56,10 +55,9 @@ while (true)
 					bulls++;
 				}
 			}
-			Console.WriteLine($"Cows: {cows}\nBulls: {bulls}");
 			break;
 		}
-		if (guess == num)
+		if (guess == num || cows == digits)
 		{
 			Console.Write($"Congrats! Attempts: {atts}\nDo you wish to play again? Press 1 if so: ");
 			var restart = Console.ReadLine();
@@ -70,7 +68,7 @@ while (true)
 		}
 		else
 		{
-			Console.Write("");
+			Console.WriteLine($"Cows: {cows}\nBulls: {bulls}");
 		}
 	}
 }
