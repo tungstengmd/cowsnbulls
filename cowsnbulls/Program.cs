@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text.RegularExpressions;
 var r = new Random();
 while (true)
@@ -21,7 +21,7 @@ while (true)
 		{
 			number = Convert.ToChar(r.Next(49, 58));
 		}
-		num = num + Convert.ToString(number);
+		num = $"{num}{number}";
 	}
 	for (int i = 1; lower.Length != digits; i++)
 	{
