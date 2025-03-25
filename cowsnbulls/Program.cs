@@ -1,5 +1,5 @@
 using System;
-using System.Text.RegularExpressions;
+using System.Linq;
 var r = new Random();
 while (true)
 {
@@ -25,8 +25,8 @@ while (true)
 	}
 	for (int i = 1; lower.Length != digits; i++)
 	{
-		lower = lower + Convert.ToString(i + 1);
-		upper = upper + Convert.ToString(8 - i);
+		lower = $"{lower}{i + 1}";
+		upper = $"{upper}{8 - i}";
 	}
 	while (true)
 	{
@@ -36,7 +36,7 @@ while (true)
 		string guess = Console.ReadLine();
 		while (guess != num)
 		{
-			if (Regex.Matches(guess, "[1-9]").Count > 1 || guess == "" || Convert.ToInt32(guess) < Convert.ToInt32(lower) || Convert.ToInt32(guess) > Convert.ToInt32(upper) || guess.Length > digits)
+			if (guess.GroupBy(x => x).Any(g => g.Count() > 1) || guess == "" || Convert.ToInt32(guess) < Convert.ToInt32(lower) || Convert.ToInt32(guess) > Convert.ToInt32(upper) || guess.Length > digits)
 			{
 				Console.WriteLine("Invalid guess!");
 				break;
