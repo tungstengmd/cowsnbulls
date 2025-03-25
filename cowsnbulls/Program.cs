@@ -1,6 +1,9 @@
 using System;
 using System.Linq;
+using System.Runtime.InteropServices;
+using static System.Formats.Asn1.AsnWriter;
 var r = new Random();
+int atts = 1;
 while (true)
 {
 	string num = "";
@@ -13,7 +16,7 @@ while (true)
 		Console.WriteLine("Can't be lower than 3, setting to default (4)");
 		digits = 4;
 	}
-	int atts = 1;
+	atts = 1;
 	for (int i = 0; i < digits; i++)
 	{
 		char number = Convert.ToChar(r.Next(49, 58));
@@ -60,7 +63,17 @@ while (true)
 		}
 		if (guess == num || bulls == digits)
 		{
-			Console.Write($"Congrats! Attempts: {atts}\nDo you wish to play again? Press 1 if so: ");
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                var read = File.ReadAllText("~/scores.txt");
+                File.WriteAllText("~/scores.txt", $"{read}{atts}\n");
+            }
+            else
+            {
+                var read = File.ReadAllText($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
+                File.WriteAllText($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt", $"{read}{atts}\n");
+            }
+            Console.Write($"\x1b[32mCongrats! Attempts: {atts}\n\x1b[39mDo you wish to play again? Press 1 if so: ");
 			var restart = Console.ReadLine();
 			if (restart == "1")
 			{
