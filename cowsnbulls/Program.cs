@@ -9,7 +9,7 @@ back:;
 while (true)
 {
 	Console.Write("Menu:\n1: Play game\n2: High score\n3: Quit");
-	string option = Consle.ReadLine();
+	string option = Console.ReadLine();
 	if (option == "3")
 	{
 		break;
@@ -18,19 +18,19 @@ while (true)
 	{
 		if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 		{
-			var read = File.ReadAllLines("~/scores.txt");
+			var[] lines = File.ReadAllLines("~/scores.txt");
 		}
 		else
 		{
-			var read = File.ReadAllLines($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
+			var[] lines = File.ReadAllLines($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
 		}
-		if (read == "")
+		if (lines == "")
 		{
-			read = "No high score :(";
+			Console.WriteLine("No high score :(");
 		}
 		else
 		{
-			Console.WriteLine(read.Most);
+			Console.WriteLine(lines.Most);
 			goto back;
 		}
 	}
@@ -95,12 +95,12 @@ while (true)
 		{
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                read = File.ReadAllText("~/scores.txt");
+                var read = File.ReadAllText("~/scores.txt");
                 File.WriteAllText("~/scores.txt", $"{read}{atts}\n");
             }
             else
             {
-                read = File.ReadAllText($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
+                var read = File.ReadAllText($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
                 File.WriteAllText($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt", $"{read}{atts}\n");
         	}
 	        Console.Write($"\x1b[32mCongrats! Attempts: {atts}\n\x1b[39mDo you wish to play again? Press 1 if so: ");
