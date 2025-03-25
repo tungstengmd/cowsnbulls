@@ -4,8 +4,26 @@ using System.Runtime.InteropServices;
 using static System.Formats.Asn1.AsnWriter;
 var r = new Random();
 int atts = 1;
+Console.WriteLine("Welcome to Cows & Bulls!");
 while (true)
 {
+	Console.Write("Menu:\n1: Play game\n2: High score\n3: Quit");
+	string option = Consle.ReadLine();
+	if (option == "3")
+	{
+		break;
+	}
+	else if (option == "2")
+	{
+		 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+		 {
+			 var read = File.ReadAllText("~/scores.txt");
+		 }
+		else
+		 {
+			var read = File.ReadAllText($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
+		}
+	}
 	string num = "";
 	string lower = "10";
 	string upper = "98";
@@ -77,6 +95,8 @@ while (true)
 			var restart = Console.ReadLine();
 			if (restart == "1")
 			{
+				Console.Clear();
+				Console.WriteLine("Welcome back!");
 				break;
 			}
 			else
