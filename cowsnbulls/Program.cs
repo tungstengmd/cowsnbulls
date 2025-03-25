@@ -5,6 +5,7 @@ using static System.Formats.Asn1.AsnWriter;
 var r = new Random();
 int atts = 1;
 Console.WriteLine("Welcome to Cows & Bulls!");
+back:;
 while (true)
 {
 	Console.Write("Menu:\n1: Play game\n2: High score\n3: Quit");
@@ -15,15 +16,26 @@ while (true)
 	}
 	else if (option == "2")
 	{
-		 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-		 {
-			 var read = File.ReadAllText("~/scores.txt");
-		 }
+		if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+		{
+			var read = File.ReadAllLines("~/scores.txt");
+		}
 		else
-		 {
-			var read = File.ReadAllText($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
+		{
+			var read = File.ReadAllLines($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
+		}
+		if (read == "")
+		{
+			read = "No high score :(";
+		}
+		else
+		{
+			Console.WriteLine(read.Most);
+			goto back;
 		}
 	}
+	else
+	{
 	string num = "";
 	string lower = "10";
 	string upper = "98";
@@ -83,12 +95,12 @@ while (true)
 		{
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                var read = File.ReadAllText("~/scores.txt");
+                read = File.ReadAllText("~/scores.txt");
                 File.WriteAllText("~/scores.txt", $"{read}{atts}\n");
             }
             else
             {
-                var read = File.ReadAllText($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
+                read = File.ReadAllText($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
                 File.WriteAllText($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt", $"{read}{atts}\n");
         	}
 	        Console.Write($"\x1b[32mCongrats! Attempts: {atts}\n\x1b[39mDo you wish to play again? Press 1 if so: ");
@@ -109,5 +121,6 @@ while (true)
 			Console.WriteLine($"Cows: {cows}\nBulls: {bulls}");
 		}
 	}
+}
 }
 leave:;
