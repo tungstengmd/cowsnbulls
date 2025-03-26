@@ -14,8 +14,9 @@ else
     lines = File.ReadAllLines($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
 }
 int[] lint = Array.ConvertAll(lines, int.Parse);
-Console.WriteLine("Welcome to Cows & Bulls!");
 back:;
+Console.Clear();
+Console.WriteLine("Welcome to Cows & Bulls!");
 while (true)
 {
     Console.WriteLine("Menu:\n1: Play game\n2: High score\n3: Quit");
@@ -34,8 +35,13 @@ while (true)
             }
             else
             {
-                Console.WriteLine(lint.Min());
-                goto back;
+                Console.Clear();
+                Console.WriteLine($"The lowest attemp count was {lint.Min()}.");
+                string alr = Console.ReadLine();
+                if (alr == "" || alr != "")
+                {
+                    goto back;
+                }
             }
         }
     }
