@@ -4,14 +4,14 @@ using System.Runtime.InteropServices;
 var r = new Random();
 int atts = 1;
 string[] lines = new string[1000000];
-if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 {
-    lines = File.ReadAllLines("~/scores.txt");
+    lines = File.ReadAllLines($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
 
 }
 else
 {
-    lines = File.ReadAllLines($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
+    lines = File.ReadAllLines("~/scores.txt");
 }
 int[] lint = Array.ConvertAll(lines, int.Parse);
 back:;
@@ -36,7 +36,7 @@ while (true)
             else
             {
                 Console.Clear();
-                Console.WriteLine($"The lowest attemp count was {lint.Min()}.");
+                Console.WriteLine($"The lowest attempt count was {lint.Min()}.");
                 string alr = Console.ReadLine();
                 if (alr == "" || alr != "")
                 {
