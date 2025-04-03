@@ -3,22 +3,22 @@ using System.Linq;
 using System.Runtime.InteropServices;
 var r = new Random();
 int atts = 1;
-string[] lines = new string[1000000];
-if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-{
-    lines = File.ReadAllLines($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
-
-}
-else
-{
-    lines = File.ReadAllLines("~/scores.txt");
-}
-int[] lint = Array.ConvertAll(lines, int.Parse);
 back:;
 Console.Clear();
 Console.WriteLine("Welcome to Cows & Bulls!");
 while (true)
 {
+
+    string[] lines = new string[1000000];
+    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+    { 
+        lines = File.ReadAllLines($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
+    }
+    else
+    {
+        lines = File.ReadAllLines($"{Environment.GetEnvironmentVariable("HOME")}/scores.txt");
+    }
+    int[] lint = Array.ConvertAll(lines, int.Parse);
     Console.WriteLine("Menu:\n1: Play game\n2: High score\n3: Quit");
     string option = Console.ReadLine();
     if (option == "3")
@@ -104,16 +104,16 @@ while (true)
             }
             if (guess == num || bulls == digits)
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                {
-                    var read = File.ReadAllText("~/scores.txt");
-                    File.WriteAllText("~/scores.txt", $"{read}{atts}\n");
-                }
-                else
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     var read = File.ReadAllText($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
                     File.WriteAllText($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt", $"{read}{atts}\n");
                 }
+		else
+		{
+                    var read = File.ReadAllText($"{Environment.GetEnvironmentVariable("HOME")}/scores.txt");
+                    File.WriteAllText($"{Environment.GetEnvironmentVariable("HOME")}scores.txt", $"{read}{atts}\n");
+		}
                 Console.Write($"\x1b[32mCongrats! Attempts: {atts}\n\x1b[39mDo you wish to play again? Press 1 if so: ");
                 var restart = Console.ReadLine();
                 if (restart == "1")
