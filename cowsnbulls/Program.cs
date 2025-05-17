@@ -10,14 +10,7 @@ while (true)
 {
 
     string[] lines = new string[1000000];
-    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-    { 
-        lines = File.ReadAllLines($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt");
-    }
-    else
-    {
-        lines = File.ReadAllLines($"{Environment.GetEnvironmentVariable("HOME")}/scores.txt");
-    }
+    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) lines = File.ReadAllLines($"{Environment.GetEnvironmentVariable("USERPROFILE")}\\scores.txt"); else lines = File.ReadAllLines($"{Environment.GetEnvironmentVariable("HOME")}/scores.txt");
     int[] lint = Array.ConvertAll(lines, int.Parse);
     Console.WriteLine("Menu:\n1: Play game\n2: High score\n3: Quit");
     string option = Console.ReadLine();
@@ -29,25 +22,19 @@ while (true)
     {
         foreach (var i in lint)
         {
-            if (i == 0)
-            {
-                Console.WriteLine("No high score :(");
-            }
+            if (i == 0) Console.WriteLine("No high score :(");
             else
             {
                 Console.Clear();
                 Console.WriteLine($"The lowest attempt count was {lint.Min()}.");
-                string alr = Console.ReadLine();
-                if (alr == "" || alr != "")
-                {
-                    goto back;
-                }
+                Console.ReadLine();
+                goto back;
             }
         }
     }
     else
     {
-        string num = "";
+        var num = "";
         string lower = "10";
         string upper = "98";
         Console.Write("Enter digits: ");
@@ -58,12 +45,13 @@ while (true)
             digits = 4;
         }
         atts = 1;
+	ffs:;
         for (int i = 0; i < digits; i++)
         {
-            char number = Convert.ToChar(r.Next(49, 58));
+            char number = Convert.ToChar(r.Next(48, 58));
             while (num.Contains(number))
             {
-                number = Convert.ToChar(r.Next(49, 58));
+                number = Convert.ToChar(r.Next(48, 58));
             }
             num = $"{num}{number}";
         }
@@ -72,6 +60,8 @@ while (true)
             lower = $"{lower}{i + 1}";
             upper = $"{upper}{8 - i}";
         }
+	if (Convert.ToInt32(num) < Convert.ToInt32(lower) || Convert.ToInt32(num) > Convert.ToInt32(upper)) goto ffs;
+	Console.WriteLine(num);
         while (true)
         {
             int cows = 0;
@@ -91,14 +81,7 @@ while (true)
                     char c = Convert.ToChar(i);
                     int index = guess.IndexOf(c);
                     int numdex = num.IndexOf(c);
-                    if (index >= 0 && index == numdex)
-                    {
-                        bulls++;
-                    }
-                    else if (index >= 0 && guess.Contains(c) && num.Contains(c))
-                    {
-                        cows++;
-                    }
+                    if (index >= 0 && index == numdex) bulls++; else if (index >= 0 && guess.Contains(c) && num.Contains(c)) cows++;
                 }
                 break;
             }
@@ -112,9 +95,9 @@ while (true)
 		else
 		{
                     var read = File.ReadAllText($"{Environment.GetEnvironmentVariable("HOME")}/scores.txt");
-                    File.WriteAllText($"{Environment.GetEnvironmentVariable("HOME")}scores.txt", $"{read}{atts}\n");
+                    File.WriteAllText($"{Environment.GetEnvironmentVariable("HOME")}/scores.txt", $"{read}{atts}\n");
 		}
-                Console.Write($"\x1b[32mCongrats! Attempts: {atts}\n\x1b[39mDo you wish to play again? Press 1 if so: ");
+                Console.Write($"\e[32mCongrats! Attempts: {atts}\n\e[39mDo you wish to play again? Press 1 if so: ");
                 var restart = Console.ReadLine();
                 if (restart == "1")
                 {
@@ -122,10 +105,7 @@ while (true)
                     Console.WriteLine("Welcome back!");
                     break;
                 }
-                else
-                {
-                    goto leave;
-                }
+                else goto leave;
             }
             else
             {
