@@ -4,8 +4,7 @@ using System.Runtime.InteropServices;
 var r = new Random();
 int atts = 1;
 //back:;
-Console.Clear();
-Console.WriteLine("Welcome to Cows & Bulls!");
+Console.WriteLine("\e[?1049h\e[2J\e[HWelcome to Cows & Bulls!");
 while (true)
 {
 	string[] lines = new string[1000000];
@@ -63,7 +62,8 @@ while (true)
 			int cows = 0;
 			int bulls = 0;
 			Console.Write($"Enter {digits} digit number: ");
-			var guess = Console.ReadLine();
+            var guess = Console.ReadLine();
+            if (guess is null) throw new ArgumentNullException("\e[91mERROR: \e[0mGUESS CANNOT BE BLANK");
 			while (guess != num)
 			{
 				if (guess.GroupBy(x => x).Any(g => g.Count() > 1) || guess == "" || Convert.ToInt32(guess) < Convert.ToInt32(lower) || Convert.ToInt32(guess) > Convert.ToInt32(upper) || guess.Length > digits)
@@ -111,3 +111,4 @@ while (true)
 	}
 }
 leave:;
+Console.Write("\e[?1049l");
